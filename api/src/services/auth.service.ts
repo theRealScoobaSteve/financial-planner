@@ -1,9 +1,9 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { getConnection, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { User } from '../entitys/user.entity';
+import { JwtService } from '@nestjs/jwt';
+import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { getConnection, Repository } from 'typeorm';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -26,18 +26,21 @@ export class AuthService {
         email,
       },
     });
+
     if (!user) {
       throw new HttpException(
         'Your email does not exist',
         HttpStatus.NOT_FOUND,
       );
     }
+
     if (!(await bcrypt.compare(password, user.password))) {
       throw new HttpException(
         'Your email or password is not valid',
         HttpStatus.NOT_FOUND,
       );
     }
+    
     if (!user.confirmed) {
       throw new HttpException(
         'Your account has not been confirmed',

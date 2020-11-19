@@ -1,5 +1,4 @@
 import {
-  PrimaryGeneratedColumn,
   Column,
   BeforeUpdate,
   BeforeInsert,

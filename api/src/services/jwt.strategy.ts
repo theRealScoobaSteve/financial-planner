@@ -1,3 +1,6 @@
+import { Repository } from 'typeorm';
+import { HttpStatus } from '@nestjs/common';
+import { User } from '../entities/user.entity';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import {
@@ -7,9 +10,6 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../entitys/user.entity';
-import { Repository } from 'typeorm';
-import { HttpStatus } from '@nestjs/common';
 
 /**
  * @todo fix this to have data types and be cleaner

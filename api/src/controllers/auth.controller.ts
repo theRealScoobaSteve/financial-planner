@@ -15,13 +15,12 @@ import {
 import { getConnection, Repository } from 'typeorm';
 import { AuthGuard } from '@nestjs/passport';
 
-import { User } from '../entitys/user.entity';
+import { User } from '../entities/user.entity';
 import { AuthService } from '../services/auth.service';
 import { HttpResponse } from '../utilities/http-response';
 import { EmailService } from '../services/email.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtAuthGuard } from '../guards/jwt.guard';
-import { AdminGuard } from '../guards/admin.guard';
 import { Cache } from 'cache-manager';
 
 export class NewAccountData {

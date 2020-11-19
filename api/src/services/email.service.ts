@@ -1,8 +1,8 @@
 import { v4 } from 'uuid';
 import * as bcrypt from 'bcrypt';
+import { User } from '../entities/user.entity';
 import { createTransport, Transporter } from 'nodemailer';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { User } from '../entitys/user.entity';
 
 @Injectable()
 export class EmailService {
