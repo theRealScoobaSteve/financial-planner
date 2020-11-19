@@ -17,8 +17,7 @@ export class AccountResolver {
 
   @Query(returns => Account)
   async author() {
-      return "HELLO";
-    // return this.authorsService.findOneById(id);
+    return this.plaidService.getClient().getAccounts()
   }
 
 //   @ResolveField()
