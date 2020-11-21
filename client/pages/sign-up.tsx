@@ -1,9 +1,10 @@
-import React, { useState } from "react";
 import Link from "next/link";
-import ApiRequest from "../utilities/api-request";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { Form, Button, Popover, OverlayTrigger, Modal } from "react-bootstrap";
 import { FaQuestion } from "react-icons/fa";
+import ApiRequest from "../utilities/api-request";
+import { Popover, Input, InputLabel, FormControl, FormHelperText, FormGroup, Modal, Button } from '@material-ui/core';
+
 
 export default function SignUp() {
   const router = useRouter();
@@ -95,24 +96,34 @@ export default function SignUp() {
     return errors;
   }
 
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Title as="h3">Password Constraints</Popover.Title>
-      <Popover.Content>
-        <ul>
-          <li>Must contain a special character ($,%,*,^)</li>
-          <li>Must contain at least one number</li>
-          <li>Must be at least 8-16 characters in length</li>
-        </ul>
-      </Popover.Content>
-    </Popover>
-  );
+  // const popover = (
+  //   <Popover 
+  //     anchorOrigin={{
+  //     vertical: 'top',
+  //     horizontal: 'left',
+  //     }}
+  //     transformOrigin={{
+  //       vertical: 'top',
+  //       horizontal: 'left',
+  //     }}
+  //     open={true}
+  //   >
+  //     <h3>Password Constraints</h3>
+  //     <div>
+  //       <ul>
+  //         <li>Must contain a special character ($,%,*,^)</li>
+  //         <li>Must contain at least one number</li>
+  //         <li>Must be at least 8-16 characters in length</li>
+  //       </ul>
+  //     </div>
+  //   </Popover>
+  // );
 
-  const generateErrorList = () => {
-    return modalText.map((error) => {
-      return <li key={error}>{error}</li>;
-    });
-  };
+  // const generateErrorList = () => {
+  //   return modalText.map((error) => {
+  //     return <li key={error}>{error}</li>;
+  //   });
+  // };
 
   return (
     <div className="App">
@@ -127,62 +138,56 @@ export default function SignUp() {
         </div>
         <div className="row justify-content-center">
           <div className="panel">
-            <Form onSubmit={register}>
-              <Form.Group controlId="formEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
+            <form onSubmit={register}>
+              <FormGroup>
+                <InputLabel>Email address</InputLabel>
+                <Input
                   type="email"
                   placeholder="Enter email"
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                 />
-                <Form.Text className="text-muted">
+                <FormHelperText>
                   We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
-              <Form.Group controlId="formFirstName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control
+                </FormHelperText>
+              </FormGroup>
+              <FormGroup>
+                <InputLabel>First Name</InputLabel>
+                <Input
                   type="text"
                   placeholder="Enter first name"
                   onChange={(e) => setFirstName(e.target.value)}
                   value={firstName}
                 />
-              </Form.Group>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
+              </FormGroup>
+              <FormGroup>
+                <InputLabel>Last Name</InputLabel>
+                <Input
                   type="text"
                   placeholder="Enter last name"
                   onChange={(e) => setLastName(e.target.value)}
                   value={lastName}
                 />
-              </Form.Group>
-              <Form.Group controlId="formPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
+              </FormGroup>
+              <FormGroup>
+                <InputLabel>Password</InputLabel>
+                <Input
                   type="password"
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                 />
-                <OverlayTrigger
-                  trigger={["hover", "click"]}
-                  placement="right"
-                  overlay={popover}
-                >
-                  <FaQuestion />
-                </OverlayTrigger>
-              </Form.Group>
-              <Form.Group controlId="formConfirmPassword">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control
+                <FaQuestion />
+              </FormGroup>
+              <FormGroup>
+                <InputLabel>Confirm Password</InputLabel>
+                <Input
                   type="password"
                   placeholder="Password"
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   value={confirmPassword}
                 />
-              </Form.Group>
+              </FormGroup>
               <Link href="/login">
                 <a
                   className="float-left"
@@ -191,25 +196,12 @@ export default function SignUp() {
                   Already have an account?
                 </a>
               </Link>
-              <Button className="float-right" variant="primary" type="submit">
+              <Button className="float-right" color="primary" type="submit">
                 Submit
               </Button>
-            </Form>
+            </form>
           </div>
         </div>
-        <Modal show={show} onHide={handleClose} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>Failed to Create Account</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <ul>{generateErrorList()}</ul>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
       </div>
     </div>
   );

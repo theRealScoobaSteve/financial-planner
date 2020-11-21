@@ -1,34 +1,34 @@
-import "../styles/globals.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import Head from 'next/head';
+import theme from '../src/theme';
+import React, { useEffect } from "react";
+import { useApollo } from '../apollo/client';
+import { ApolloProvider } from '@apollo/client';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
 
-import React from 'react';
-import { wrapper } from "../redux/base-store.store";
-import App, { AppInitialProps, AppContext } from 'next/app';
-
-class MyApp extends App<AppInitialProps> {
-
-    public static getInitialProps = async ({Component, ctx}: AppContext) => {
-
-        ctx.store.dispatch({type: 'TOE', payload: 'was set in _app'});
-
-        return {
-            pageProps: {
-                // Call page-level getInitialProps
-                ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
-                // Some custom thing for all pages
-                pathname: ctx.pathname,
-            },
-        };
-
-    };
-
-    public render() {
-        const {Component, pageProps} = this.props;
-
-        return (
-            <Component {...pageProps} />
-        );
+export default function App({ Component, pageProps }) {
+  const apolloClient = useApollo(pageProps.initialApolloState);
+  useEffect(() => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
     }
-}
+  }, []);
 
-export default wrapper.withRedux(MyApp);
+  return (
+    <ApolloProvider client={apolloClient}>
+      <React.Fragment>
+        <Head>
+          <title>My page</title>
+          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+        </Head>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
+    </React.Fragment>
+    </ApolloProvider>
+  )
+}
