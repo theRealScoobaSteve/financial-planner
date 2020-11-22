@@ -16,8 +16,6 @@ export default function SignUp() {
   const [show, setShow] = useState(false);
   const [modalText, setModalText] = useState([]);
 
-  const handleClose = () => setShow(false);
-
   const register = (e) => {
     e.preventDefault();
 
@@ -46,9 +44,6 @@ export default function SignUp() {
             setShow(true);
           }
         })
-        .catch(function (error) {
-          console.error("ERROR: ", error);
-        });
     } else {
       setShow(true);
     }
